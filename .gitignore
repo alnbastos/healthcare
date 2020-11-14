@@ -1,4 +1,4 @@
 .idea/*
-agenda/agenda/__pycache__/*
+**/__pycache__/**
 agenda/db.sqlite3
-
+agenda/core/migrations/0001_initial.py
