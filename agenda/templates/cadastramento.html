@@ -37,14 +37,14 @@
       <div class="card">
          <h3>Cadastro</h3>
          <form  method="post"> {% csrf_token %}
-            Nome: <input type="text" name="nome" size="20"><br>
-            Data de Nascimento: <input type="date" name="data_nasc" size="20"><br>
-            Sexo: <input type="text" name="sexo" size="20"><br>
-            CPF: <input type="text" name="cpf" size="20"><br>
-            Endereco: <input type="text" name="endereco" size="20"><br>
-            Telefone: <input type="text" name="telefone" size="10"><br>
-            Email: <input type="text" name="email" size="15"><br>
-            Senha: <input type="password" name="pass_user"><br>
+            {{ form.as_p }}
+
+            {% for message in messages %}
+            <div align="left">
+               <strong>Erro: </strong>{{ message }}
+            </div>
+            {% endfor %}
+
             <input type="submit" value="Salvar"/>
             <p style="text-align: center ;">Já tem conta?
                <a href="login.html"> Ir para Login </a>

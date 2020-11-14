@@ -15,4 +15,3 @@ class UserProfile(models.Model):
     telefone = models.CharField(max_length=11)
     email = models.CharField(max_length=100)
     user = models.OneToOneField('auth.User', unique=True, on_delete=models.CASCADE)
-
