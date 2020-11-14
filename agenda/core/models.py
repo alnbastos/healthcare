@@ -8,7 +8,7 @@ class UserProfile(models.Model):
         (u'M', u'Masculino')
     )
     nome = models.CharField(max_length=100)
-    data_nasc = models.DateTimeField
+    data_nasc = models.DateField()
     sexo = models.CharField(max_length=2, choices=SEXO_CHOICES)
     cpf = models.CharField(max_length=11, primary_key=True)
     endereco = models.CharField(max_length=100)
