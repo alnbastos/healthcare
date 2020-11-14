@@ -1,0 +1,4 @@
+.idea/*
+agenda/agenda/__pycache__/*
+agenda/db.sqlite3
+
