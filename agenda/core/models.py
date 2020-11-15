@@ -23,16 +23,22 @@ class ClienteProfile(models.Model):
     email = models.CharField(max_length=100)
     user = models.OneToOneField('User', unique=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.nome
+
 
 class MedicoProfile(models.Model):
     nome = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     crm = models.IntegerField(primary_key=True)
-    especialidade = models.ManyToManyField('Especialidade')
+    especialidade = models.ManyToManyField('Especialidade', through='MedicoEspecialidade')
     telefone = models.CharField(max_length=11)
     cidade = models.CharField(max_length=100)
     user = models.OneToOneField('User', related_name='user', unique=True, on_delete=models.CASCADE)
     clinica = models.OneToOneField('User', related_name='clinica', unique=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome
 
 
 class ClinicaProfile(models.Model):
@@ -54,3 +60,7 @@ class Especialidade(models.Model):
     def __str__(self):
         return self.descricao
 
+
+class MedicoEspecialidade(models.Model):
+    medico = models.ForeignKey(MedicoProfile, on_delete=models.CASCADE)
+    especialidade = models.ForeignKey(Especialidade, on_delete=models.CASCADE)

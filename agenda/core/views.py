@@ -48,17 +48,17 @@ def cadastro_cliente(requisicao):
 def cadastro_medico(requisicao):
     if requisicao.POST:
         form = CadastroMedicoForm(requisicao.POST)
-        nome = requisicao.POST.get('nome')
-        crm = requisicao.POST.get('crm')
-        especialidade = requisicao.POST.get('especialidade')
-        telefone = requisicao.POST.get('telefone')
-        cidade = requisicao.POST.get('cidade')
-        clinica = form.cleaned_data['clinica'].user
-        email = requisicao.POST.get('email')
-        pass_user = requisicao.POST.get('pass_user')
         if form.is_valid():
+            nome = requisicao.POST.get('nome')
+            crm = requisicao.POST.get('crm')
+            telefone = requisicao.POST.get('telefone')
+            cidade = requisicao.POST.get('cidade')
+            email = requisicao.POST.get('email')
+            pass_user = requisicao.POST.get('pass_user')
             email_existe = User.objects.filter(username=email).exists()
             crm_existe = MedicoProfile.objects.filter(crm=crm).exists()
+            especialidade = form.cleaned_data['especialidade']
+            clinica = form.cleaned_data['clinica'].user
             if email_existe:
                 messages.error(requisicao, 'E-mail já cadastrado.')
             if crm_existe:
@@ -68,14 +68,18 @@ def cadastro_medico(requisicao):
                 user_profile = MedicoProfile(nome=nome,
                                              email=email,
                                              crm=crm,
-                                             especialidade=especialidade,
                                              telefone=telefone,
                                              cidade=cidade,
                                              user=user,
                                              clinica=clinica)
+
                 user.save()
                 user_profile.save()
-                return HttpResponse('Foi salvo')
+
+                for es in especialidade:
+                    user_profile.especialidade.add(es.id)
+
+                return HttpResponse('Médico salvo')
     else:
         form = CadastroMedicoForm()
     return render(requisicao, 'cadastro_medico.html', context={'form': form})  # se for GET

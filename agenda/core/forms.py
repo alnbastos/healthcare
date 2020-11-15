@@ -20,7 +20,7 @@ class CadastroUsuarioForm(forms.Form):
     telefone = forms.CharField(max_length=11, label='Telefone')
 
 
-class CadastroMedicoForm(forms.ModelForm):
+class CadastroMedicoForm(forms.Form):
     email = forms.EmailField(max_length=100, label='E-mail')
     pass_user = forms.CharField(widget=forms.PasswordInput, label='Senha')
     nome = forms.CharField(max_length=100, label='Nome')
