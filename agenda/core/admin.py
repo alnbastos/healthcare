@@ -1,10 +1,22 @@
 from django.contrib import admin
-from core.models import UserProfile
+from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile, Especialidade
 # Register your models here.
+
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email')
 
 
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('nome', 'email')
 
 
-admin.site.register(UserProfile, UserProfileAdmin)
+class EspecialidadeAdmin(admin.ModelAdmin):
+    list_display = ['descricao']
+
+
+admin.site.register(User, UserAdmin)
+admin.site.register(ClienteProfile, UserProfileAdmin)
+admin.site.register(MedicoProfile, UserProfileAdmin)
+admin.site.register(ClinicaProfile, UserProfileAdmin)
+admin.site.register(Especialidade, EspecialidadeAdmin)

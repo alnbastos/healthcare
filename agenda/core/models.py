@@ -1,8 +1,15 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 # Create your models here.
-class UserProfile(models.Model):
+class User(AbstractUser):
+    is_cliente = models.BooleanField('cliente status', default=False)
+    is_medico = models.BooleanField('medico status', default=False)
+    is_clinica = models.BooleanField('clinica status', default=False)
+
+
+class ClienteProfile(models.Model):
     SEXO_CHOICES = (
         (u'F', u'Feminino'),
         (u'M', u'Masculino')
@@ -14,4 +21,30 @@ class UserProfile(models.Model):
     endereco = models.CharField(max_length=100)
     telefone = models.CharField(max_length=11)
     email = models.CharField(max_length=100)
-    user = models.OneToOneField('auth.User', unique=True, on_delete=models.CASCADE)
+    user = models.OneToOneField('User', unique=True, on_delete=models.CASCADE)
+
+
+class MedicoProfile(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    crm = models.IntegerField(primary_key=True)
+    especialidade = models.ManyToManyField('Especialidade')
+    telefone = models.CharField(max_length=11)
+    cidade = models.CharField(max_length=100)
+    user = models.OneToOneField('User', related_name='user', unique=True, on_delete=models.CASCADE)
+    clinica = models.OneToOneField('User', related_name='clinica', unique=True, on_delete=models.CASCADE)
+
+
+class ClinicaProfile(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    endereco = models.CharField(max_length=100)
+    cidade = models.CharField(max_length=100)
+    cep = models.CharField(max_length=100)
+    telefone = models.CharField(max_length=11)
+    user = models.OneToOneField('User', unique=True, on_delete=models.CASCADE)
+
+
+class Especialidade(models.Model):
+    descricao = models.CharField(max_length=100, unique=True)
+
