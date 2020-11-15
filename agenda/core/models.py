@@ -44,7 +44,13 @@ class ClinicaProfile(models.Model):
     telefone = models.CharField(max_length=11)
     user = models.OneToOneField('User', unique=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.nome
+
 
 class Especialidade(models.Model):
     descricao = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.descricao
 
