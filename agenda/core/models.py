@@ -21,7 +21,7 @@ class ClienteProfile(models.Model):
     endereco = models.CharField(max_length=100)
     telefone = models.CharField(max_length=11)
     email = models.CharField(max_length=100)
-    user = models.OneToOneField('User', unique=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
@@ -34,8 +34,8 @@ class MedicoProfile(models.Model):
     especialidade = models.ManyToManyField('Especialidade', through='MedicoEspecialidade')
     telefone = models.CharField(max_length=11)
     cidade = models.CharField(max_length=100)
-    user = models.OneToOneField('User', related_name='user', unique=True, on_delete=models.CASCADE)
-    clinica = models.OneToOneField('User', related_name='clinica', unique=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
+    clinica = models.ForeignKey(User, related_name='clinica', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
@@ -48,7 +48,7 @@ class ClinicaProfile(models.Model):
     cidade = models.CharField(max_length=100)
     cep = models.CharField(max_length=100)
     telefone = models.CharField(max_length=11)
-    user = models.OneToOneField('User', unique=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
