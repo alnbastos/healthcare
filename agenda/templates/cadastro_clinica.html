@@ -1,18 +1,19 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-br">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Cadastro</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="{% static 'css/style1.css' %}">
    </head>
 
    <body>
       <!--Navbar-->
       <nav class="menu">
          <div class="logo">
-               <img src="./img/logo.png" width="150" height="38" />
+               <img src="{% static 'img/logo.png' %}" width="150" height="38" />
          </div>
          <ul class="menu-items">
             <li> <a href="index.html">  HOME </a>  </li>
@@ -29,7 +30,7 @@
          <!--Imagem do banner-->
          <div class="banner-img">
             <ul>
-               <li><img src="./img/logo.png" width="600" height="200" /></li>
+               <li><img src="{% static 'img/logo.png' %}" width="600" height="200" /></li>
             </ul>
          </div>
          <!--Fim Imagem do banner-->

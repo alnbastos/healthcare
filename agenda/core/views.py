@@ -7,6 +7,13 @@ from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaF
 
 # Create your views here.
 
+def home_page(requisicao):
+    return render(requisicao, 'index.html')
+
+
+def quem_somos(requisicao):
+    return render(requisicao, 'quemsomos.html')
+
 
 def cadastro_cliente(requisicao):
     if requisicao.POST:
@@ -41,7 +48,7 @@ def cadastro_cliente(requisicao):
                 return HttpResponse('Foi salvo')
     else:
         form = CadastroUsuarioForm()
-    return render(requisicao, 'cadastramento.html', context={'form': form})  # se for GET
+    return render(requisicao, 'cadastro_cliente.html', context={'form': form})  # se for GET
 
 
 def cadastro_medico(requisicao):
@@ -118,3 +125,7 @@ def cadastro_clinica(requisicao):
     else:
         form = CadastroClinicaForm()
     return render(requisicao, 'cadastro_clinica.html', context={'form': form})  # se for GET
+
+
+def select_user(requisicao):
+    return render(requisicao, 'select_user.html')

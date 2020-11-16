@@ -15,12 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 from core import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('cadastro/', views.cadastro_user),
+    path('', views.home_page),
+    path('quemsomos/', views.quem_somos),
     path('cadastro/cliente/', views.cadastro_cliente),
     path('cadastro/medico/', views.cadastro_medico),
     path('cadastro/clinica/', views.cadastro_clinica),
-]
+    path('selectuser/', views.select_user),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
