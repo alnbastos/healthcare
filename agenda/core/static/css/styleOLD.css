@@ -1,0 +1,60 @@
+<!--Index-->
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.menu{
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0 15px 0;
+    background-color: #050F54;
+    border-bottom: solid #02feef 10px;
+    color: white;
+    color: inherit;
+}
+
+.logo {
+    padding: 50px;
+    width: 90%;
+    display: inline-block;
+    }
+
+.menu-items{
+    display: flex;
+    color: white;
+    color: inherit;
+}
+
+.menu-items li{
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 1px solid gray;
+    color: white;
+    color: inherit;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.banner{
+    background-color: #050F54;
+    border-bottom: solid #02feef 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner-img{
+    padding: 30px 0 30px 0;
+    margin-bottom: 30px;
+}
+
+<!--Fim Index-->
+
+<!--Quem-somos-->
+
