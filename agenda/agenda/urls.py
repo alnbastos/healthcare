@@ -22,4 +22,5 @@ urlpatterns = [
     # path('cadastro/', views.cadastro_user),
     path('cadastro/cliente/', views.cadastro_cliente),
     path('cadastro/medico/', views.cadastro_medico),
+    path('cadastro/clinica/', views.cadastro_clinica),
 ]

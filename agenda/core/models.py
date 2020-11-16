@@ -43,6 +43,7 @@ class MedicoProfile(models.Model):
 
 class ClinicaProfile(models.Model):
     nome = models.CharField(max_length=100)
+    cnpj = models.IntegerField(primary_key=True)
     email = models.CharField(max_length=100)
     endereco = models.CharField(max_length=100)
     cidade = models.CharField(max_length=100)

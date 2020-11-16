@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile
 from django.contrib import messages
-from core.forms import CadastroUsuarioForm, CadastroMedicoForm
+from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm
 
 
 # Create your views here.
@@ -19,7 +19,6 @@ def cadastro_cliente(requisicao):
         email = requisicao.POST.get('email')
         pass_user = requisicao.POST.get('pass_user')
         form = CadastroUsuarioForm(requisicao.POST)
-        print(data_nasc)
         if form.is_valid():
             email_existe = User.objects.filter(username=email).exists()
             cpf_existe = ClienteProfile.objects.filter(cpf=cpf).exists()
@@ -83,3 +82,39 @@ def cadastro_medico(requisicao):
     else:
         form = CadastroMedicoForm()
     return render(requisicao, 'cadastro_medico.html', context={'form': form})  # se for GET
+
+
+def cadastro_clinica(requisicao):
+    if requisicao.POST:
+        nome = requisicao.POST.get('nome')
+        cnpj = requisicao.POST.get('cnpj')
+        cep = requisicao.POST.get('cep')
+        endereco = requisicao.POST.get('endereco')
+        cidade = requisicao.POST.get('cidade')
+        telefone = requisicao.POST.get('telefone')
+        email = requisicao.POST.get('email')
+        pass_user = requisicao.POST.get('pass_user')
+        form = CadastroClinicaForm(requisicao.POST)
+        if form.is_valid():
+            email_existe = User.objects.filter(username=email).exists()
+            cnpj_existe = ClinicaProfile.objects.filter(cnpj=cnpj).exists()
+            if email_existe:
+                messages.error(requisicao, 'E-mail já cadastrado.')
+            if cnpj_existe:
+                messages.error(requisicao, 'CNPJ já cadastrado.')
+            if not email_existe and not cnpj_existe:
+                user = User(username=email, password=pass_user, is_clinica=True)  # criar usuário
+                user_profile = ClinicaProfile(nome=nome,
+                                              cnpj=cnpj,
+                                              cep=cep,
+                                              endereco=endereco,
+                                              cidade=cidade,
+                                              telefone=telefone,
+                                              email=email,
+                                              user=user)
+                user.save()
+                user_profile.save()
+                return HttpResponse('Foi salvo')
+    else:
+        form = CadastroClinicaForm()
+    return render(requisicao, 'cadastro_clinica.html', context={'form': form})  # se for GET
