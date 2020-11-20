@@ -22,11 +22,17 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('cadastro/', views.cadastro_user),
     path('', views.home_page),
     path('quemsomos/', views.quem_somos),
-    path('cadastro/cliente/', views.cadastro_cliente),
+    path('agendamento/', views.agendamento),
+    path('servicos/', views.servicos),
+    # login
+    path('selectuser/', views.select_user),
+    path('selectuser/logincliente/', views.login_cliente),
+    # cadastrar
+    path('cadastro/cliente/', views.cadastro_cliente, name='aline'),
     path('cadastro/medico/', views.cadastro_medico),
     path('cadastro/clinica/', views.cadastro_clinica),
-    path('selectuser/', views.select_user),
+    # agendar
+    path('agendar/', views.agendar),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
