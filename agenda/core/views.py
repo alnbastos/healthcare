@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile
 from django.contrib import messages
 from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm
@@ -7,14 +7,20 @@ from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaF
 
 # Create your views here.
 
+# telas para apresentar apenas textos
 def home_page(requisicao):
     return render(requisicao, 'index.html')
 
 
 def quem_somos(requisicao):
-    return render(requisicao, 'quemsomos.html')
+    return render(requisicao, 'quem_somos.html')
 
 
+def agendamento(requisicao):
+    return render(requisicao, 'agendamento.html')
+
+
+# telas para receber requisições
 def cadastro_cliente(requisicao):
     if requisicao.POST:
         nome = requisicao.POST.get('nome')
@@ -129,3 +135,15 @@ def cadastro_clinica(requisicao):
 
 def select_user(requisicao):
     return render(requisicao, 'select_user.html')
+
+
+def login_cliente(requisicao):
+    return render(requisicao, 'login_cliente.html')
+
+
+def servicos(requisicao):
+    return render(requisicao, 'servicos.html')
+
+
+def agendar(requisicao):
+    return render(requisicao, 'agendar.html')

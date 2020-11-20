@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quem somos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+</head>
+
+<body>
+	<nav class="menu">
+		<div class="logo">
+			<img src="{% static 'img/logo.png' %}" width="150" height="38"/>
+		</div>
+
+		<ul class="menu-items">
+				<li><a href="/">HOME</a></li>
+				<li><a href="/quemsomos/">QUEM SOMOS</a></li>
+				<li><a href="/servicos/">SERVIÇOS</a></li>
+				<li><a href="/agendamento/">AGENDAMENTO</a></li>
+				<li><a href="/selectuser/">ENTRAR</a></li>
+		</ul>
+	</nav>
+
+	<div class="card">
+		<h1>Healh Care - Quem Somos</h1>
+			<p>
+				Somos um grupo de estudantes da universidade ETEP – São José dos Campos - SP, e estamos desenvolvendo um projeto que abrange as disciplinas de Design de Software, Gerenciamento Ágil de Projetos de Software, Segurança da Informação e Testes e Homologação de Software, na qual desenvolvemos uma página Web para auxilio aos pacientes das clínicas cadastradas.
+			</p>
+			<p>
+				Visando a crise de saúde mundial que estamos enfrentando, o Covid-19, desenvolvemos uma plataforma online com o objetivo de facilitar agendamento para consultas médicas do paciente, não necessitando ir presencialmente aos hospitais/clinicas médias. O usuário poderá verificar os dias e médicos disponíveis para realizar o agendamento de suas consultas médicas, poderá também ter acesso ao seu calendário de consultas. Ficam disponíveis ao usuário, consultas de pronto-atendimento, exames já realizados e receituários.
+			</p>
+
+		<h2>Benefícios tragos pelo projeto</h2>
+			<p>
+				Este projeto é desenvolvido como foco a facilitação do paciente poder agendar, consultar e visualizar seus exames e receituários, tudo de forma online. Trazendo como partes interessadas: pacientes, médicos, clínicas e convênios médicos.
+				O projeto traz como benefícios, utilizando a internet, os seguintes tópicos:
+			</p>
+
+		<table>
+			<li>Agendamento;</li>
+			<li>Consultas;</li>
+			<li>Retorno rápido e fácil do atendimento;</li>
+			<li>Exames e receituários;</li>
+			<li>Pronto-atendimento via chat.</li>
+		</table>
+	</div>
+</body>
+</html>
