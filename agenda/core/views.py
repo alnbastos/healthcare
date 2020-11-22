@@ -133,8 +133,12 @@ def cadastro_clinica(requisicao):
     return render(requisicao, 'cadastro_clinica.html', context={'form': form})  # se for GET
 
 
-def select_user(requisicao):
-    return render(requisicao, 'select_user.html')
+def ok_cliente(requisicao):
+    return render(requisicao, 'poscad_cliente.html')
+
+
+def login(requisicao):
+    return render(requisicao, 'login.html')
 
 
 def login_cliente(requisicao):
