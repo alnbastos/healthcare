@@ -46,4 +46,5 @@ urlpatterns = [
     # agendar
     path('agendar/', views.agendar),
     path('ajax/load-clinica/', views.load_clinica, name='ajax_load_clinica'),
+    path('ajax/load-medico/', views.load_medico, name='ajax_load_medico'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
