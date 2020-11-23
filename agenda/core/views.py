@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile
 from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm
 
 
@@ -18,6 +20,10 @@ def quem_somos(requisicao):
 
 def agendamento(requisicao):
     return render(requisicao, 'agendamento.html')
+
+
+def servicos(requisicao):
+    return render(requisicao, 'servicos.html')
 
 
 # telas para receber requisições
@@ -49,9 +55,10 @@ def cadastro_cliente(requisicao):
                                               telefone=telefone,
                                               email=email,
                                               user=user)
+                user.set_password(pass_user)  # criptografria da senha
                 user.save()
                 user_profile.save()
-                return HttpResponse('Foi salvo')
+                return render(requisicao, 'poscad_cliente.html')
     else:
         form = CadastroUsuarioForm()
     return render(requisicao, 'cadastro_cliente.html', context={'form': form})  # se for GET
@@ -85,6 +92,7 @@ def cadastro_medico(requisicao):
                                              user=user,
                                              clinica=clinica)
 
+                user.set_password(pass_user)  # criptografria da senha
                 user.save()
                 user_profile.save()
 
@@ -125,6 +133,7 @@ def cadastro_clinica(requisicao):
                                               telefone=telefone,
                                               email=email,
                                               user=user)
+                user.set_password(pass_user)  # criptografria da senha
                 user.save()
                 user_profile.save()
                 return HttpResponse('Foi salvo')
@@ -137,17 +146,31 @@ def ok_cliente(requisicao):
     return render(requisicao, 'poscad_cliente.html')
 
 
-def login(requisicao):
+def login_user(requisicao):
     return render(requisicao, 'login.html')
+
+
+def logout_user(requisicao):
+    return redirect('/')
 
 
 def login_cliente(requisicao):
     return render(requisicao, 'login_cliente.html')
 
 
-def servicos(requisicao):
-    return render(requisicao, 'servicos.html')
+def submit_cliente(requisicao):
+    if requisicao.POST:
+        email = requisicao.POST['email']
+        pass_user = requisicao.POST['pass_user']
+        usuario = authenticate(username=email, password=pass_user)
+        if usuario is not None:
+            login(requisicao, usuario)
+            return render(requisicao, 'perfil_cliente.html')
+        else:
+            messages.error(requisicao, 'Usuário ou senha invállido.')
+            return render(requisicao, 'login_cliente.html')
 
 
+@login_required(login_url='/login/')
 def agendar(requisicao):
     return render(requisicao, 'agendar.html')
