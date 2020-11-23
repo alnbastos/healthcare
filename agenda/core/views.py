@@ -1,14 +1,9 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-# from django.contrib.sessions import
 from django.contrib.auth.decorators import login_required
 from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile, Agenda
 from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm, AgendaForm
-
-
-# Create your views here.
 
 # telas para apresentar apenas textos
 def home_page(requisicao):
@@ -183,6 +178,7 @@ def submit_user(requisicao):
             return render(requisicao, 'login_user.html')
 
 
+@login_required(login_url='/login/')
 def perfil_cliente(requisicao):
     usuario = requisicao.user
     nome = ClienteProfile.objects.get(user=usuario)
@@ -190,29 +186,31 @@ def perfil_cliente(requisicao):
     return render(requisicao, 'perfil_cliente.html', dados)
 
 
+@login_required(login_url='/login/')
 def perfil_medico(requisicao):
     return render(requisicao, 'perfil_medico.html')
 
 
+@login_required(login_url='/login/')
 def perfil_clinica(requisicao):
     return render(requisicao, 'perfil_clinica.html')
 
 
 @login_required(login_url='/login/')
 def agendar(requisicao):
-    return render(requisicao, 'agendar.html')
+    form = AgendaForm()
+    return render(requisicao, 'agendar.html', context={'form': form})
 
-#
-# def load_medico(requisicao):
-#     medico_id = requisicao.GET.get('medico')
-#
-#     return render(requisicao, 'agendar.html', {'clinicas': clinicas})
-#
+
+def load_medico(requisicao):
+    especialidade_id = requisicao.GET.get('especialidade_id')
+    clinica_id = requisicao.GET.get('clinica_id')
+    medicos = MedicoProfile.objects.filter(especialidade__id=especialidade_id, clinica__clinicaprofile__cnpj=clinica_id)
+    return render(requisicao, 'options_agenda.html', {'models': medicos})
 
 
 def load_clinica(requisicao):
-    #especialidade_id = requisicao.GET.get('especialidade_id')
-    especialidade_id = 1
+    especialidade_id = requisicao.GET.get('especialidade_id')
     medicos = MedicoProfile.objects.filter(especialidade__id=especialidade_id)
-    clinicas = ClinicaProfile.objects.filter(pk__in=medicos.clinica_id)
-    return render(requisicao, 'options_clinica.html', {'clinicas': clinicas})
+    clinicas = ClinicaProfile.objects.filter(pk__in=medicos.values_list('clinica__clinicaprofile__cnpj'))
+    return render(requisicao, 'options_agenda.html', {'models': clinicas})
