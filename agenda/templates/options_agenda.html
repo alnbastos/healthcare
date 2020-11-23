@@ -6,8 +6,8 @@
 </head>
 <body>
     <option value="">---------</option>
-    {% for clinica in clinicas %}
-    <option value="{{ city.pk }}">{{ clinica.name }}</option>
+    {% for model in models %}
+    <option value="{{ model.pk }}">{{ model.nome }}</option>
     {% endfor %}
 </body>
 </html>
