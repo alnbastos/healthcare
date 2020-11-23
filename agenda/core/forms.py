@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import fields
-from core.models import ClinicaProfile, Especialidade, MedicoProfile
+from core.models import ClinicaProfile, Especialidade, MedicoProfile, Agenda
 
 
 # Create your forms here.
@@ -40,3 +40,14 @@ class CadastroClinicaForm(forms.Form):
     telefone = forms.CharField(max_length=11, label='Telefone')
     email = forms.EmailField(max_length=100, label='E-mail')
     pass_user = forms.CharField(widget=forms.PasswordInput, label='Senha')
+
+
+class AgendaForm(forms.ModelForm):
+    class Meta:
+        model = Agenda
+        fields = ('data_agenda', 'clinica', 'especialidade', 'medico')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['clinica'].queryset = ClinicaProfile.objects.none()
+        self.fields['medico'].queryset = MedicoProfile.objects.none()

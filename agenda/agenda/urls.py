@@ -45,4 +45,5 @@ urlpatterns = [
     path('cadastro/clinica/ok/', views.ok_clinica),
     # agendar
     path('agendar/', views.agendar),
+    path('ajax/load-clinica/', views.load_clinica, name='ajax_load_clinica'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

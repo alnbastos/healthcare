@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 # from django.contrib.sessions import
 from django.contrib.auth.decorators import login_required
-from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile
-from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm
+from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile, Agenda
+from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm, AgendaForm
 
 
 # Create your views here.
@@ -185,8 +185,8 @@ def submit_user(requisicao):
 
 def perfil_cliente(requisicao):
     usuario = requisicao.user
-    nome = ClienteProfile.objects.filter(email=usuario)
-    dados = {'nome': nome}
+    nome = ClienteProfile.objects.get(user=usuario)
+    dados = {'nome': nome.nome}
     return render(requisicao, 'perfil_cliente.html', dados)
 
 
@@ -201,3 +201,18 @@ def perfil_clinica(requisicao):
 @login_required(login_url='/login/')
 def agendar(requisicao):
     return render(requisicao, 'agendar.html')
+
+#
+# def load_medico(requisicao):
+#     medico_id = requisicao.GET.get('medico')
+#
+#     return render(requisicao, 'agendar.html', {'clinicas': clinicas})
+#
+
+
+def load_clinica(requisicao):
+    #especialidade_id = requisicao.GET.get('especialidade_id')
+    especialidade_id = 1
+    medicos = MedicoProfile.objects.filter(especialidade__id=especialidade_id)
+    clinicas = ClinicaProfile.objects.filter(pk__in=medicos.clinica_id)
+    return render(requisicao, 'options_clinica.html', {'clinicas': clinicas})

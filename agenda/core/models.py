@@ -65,3 +65,13 @@ class Especialidade(models.Model):
 class MedicoEspecialidade(models.Model):
     medico = models.ForeignKey(MedicoProfile, on_delete=models.CASCADE)
     especialidade = models.ForeignKey(Especialidade, on_delete=models.CASCADE)
+
+
+class Agenda(models.Model):
+    data_agenda = models.DateTimeField()
+    clinica = models.ForeignKey(ClinicaProfile, on_delete=models.SET_NULL, null=True)
+    especialidade = models.ForeignKey(Especialidade, on_delete=models.SET_NULL, null=True)
+    medico = models.ForeignKey(MedicoProfile, on_delete=models.SET_NULL, null=True)
+
+    # def __str__(self):
+    #     return self.medico

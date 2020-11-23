@@ -25,24 +25,16 @@
     </nav>
     <!--Fim-Navbar-->
 
-    <!--Banner-->
-    <div>
-        <div class="banner">
-            <div class="banner-img">
-                <ul>
-                    <li><img src="{% static 'img/logo.png' %}" width="600" height="200" /></li>
-                </ul>
-            </div>
-
+    <div class="card">
+        <div align="right">
+            <a href="/logout/">Logout</a>
         </div>
-    </div>
-    <!--Fim Imagem do banner-->
 
-    <div align="right">
-        <a href="/logout/">Logout</a>
+        <h1>Bem-vindo, {{ nome }}</h1>
+        <br><br>
+        <h4>Agendamentos:</h4>
+        <a href="/agendar">Agende sua consulta</a>
     </div>
-
-    <h1>Bem-vindo, {{ nome }}</h1>
 
 </body>
 </html>
