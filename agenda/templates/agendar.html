@@ -26,44 +26,49 @@
 		</nav>
 	</table>
 	<div class="card">
-		<form class="agendar">
-			<h3> Consulta Médica </h3>
-
-			<label>Data: </label>
-			<input type="date"><br><br>
-
-			<label for="centro">Centro Médico: </label>
-				<select id="centro" name="centro">
-					<option value="----">------</option>
-					<option value="presencial">Presencial</option>
-					<option value="online">Online</option>
-				</select><br><br>
-
-			<label for="medico">Qual a Especialidade:</label>
-				<select id="medico" name="medico">
-					<option value="----">------</option>
-					<option value="cardiologista">Cardiologista</option>
-					<option value="clinico">Clinico Geral</option>
-					<option value="ginecologista">Ginecologista</option>
-					<option value="pediatra">Pediatra</option>
-					<option value="psicologa">Psicologa</option>
-					<option value="psiquiatra">Psiquiatra</option>
-					<option value="neurologista">Neurologista</option>
-				</select><br><br>
-
-			<label for="doutor">Médico:</label>
-				<select id="doutor" name="doutor">
-					<option value="----">------</option>
-					<option value="maria">Dra. Maria</option>
-					<option value="aline">Dra. Aline</option>
-					<option value="eddy">Dr. Emanuel</option>
-					<option value="paulo">Dr. Paulo</option>
-					<option value="gabriel">Dr. Gabriel</option>
-					<option value="matheus">Dr. Matheus</option>
-					<option value="marcos">Dr. Marcos</option>
-				</select><br>
-			<input type="button" value="Agendar Consulta">
+		<form class="agendar" method="post" id="agendaForm" data-clinica-url="{% url 'ajax_load_clinica' %}" data-medico-url="{% url 'ajax_load_medico' %}" novalidate>
+			{% csrf_token %}
+			<table>
+			  {{ form.as_table }}
+			</table>
+			<button type="submit">Agendar Consulta</button>
 		</form>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script>
+			$("#id_especialidade").change(function () {
+			  var url = $("#agendaForm").attr("data-clinica-url");
+			  var especialidade_id = $(this).val();
+
+			  $.ajax({
+				url: url,
+				data: {
+				  'especialidade_id': especialidade_id
+				},
+				success: function (data) {
+				  $("#id_clinica").html(data);
+				  $("#id_medico").html([]);
+				}
+			  });
+			});
+
+			$("#id_clinica").change(function () {
+			  var url = $("#agendaForm").attr("data-medico-url");
+			  var clinica_id = $(this).val();
+			  var especialidade_id = $("#id_especialidade").val();
+
+			  $.ajax({
+				url: url,
+				data: {
+				  'especialidade_id': especialidade_id,
+				  'clinica_id': clinica_id,
+				},
+				success: function (data) {
+				  $("#id_medico").html(data);
+				}
+			  });
+			});
+		</script>
 	</div>
 </body>
 </html>
