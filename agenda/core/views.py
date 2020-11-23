@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+# from django.contrib.sessions import
 from django.contrib.auth.decorators import login_required
 from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile
 from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm
@@ -58,7 +59,7 @@ def cadastro_cliente(requisicao):
                 user.set_password(pass_user)  # criptografria da senha
                 user.save()
                 user_profile.save()
-                return render(requisicao, 'poscad_cliente.html')
+                return redirect('/cadastro/cliente/ok/')
     else:
         form = CadastroUsuarioForm()
     return render(requisicao, 'cadastro_cliente.html', context={'form': form})  # se for GET
@@ -99,7 +100,7 @@ def cadastro_medico(requisicao):
                 for es in especialidade:
                     user_profile.especialidade.add(es.id)
 
-                return HttpResponse('Médico salvo')
+                return redirect('/cadastro/medico/ok/')
     else:
         form = CadastroMedicoForm()
     return render(requisicao, 'cadastro_medico.html', context={'form': form})  # se for GET
@@ -136,7 +137,7 @@ def cadastro_clinica(requisicao):
                 user.set_password(pass_user)  # criptografria da senha
                 user.save()
                 user_profile.save()
-                return HttpResponse('Foi salvo')
+                return redirect('/cadastro/clinica/ok/')
     else:
         form = CadastroClinicaForm()
     return render(requisicao, 'cadastro_clinica.html', context={'form': form})  # se for GET
@@ -146,29 +147,55 @@ def ok_cliente(requisicao):
     return render(requisicao, 'poscad_cliente.html')
 
 
+def ok_medico(requisicao):
+    return render(requisicao, 'poscad_medico.html')
+
+
+def ok_clinica(requisicao):
+    return render(requisicao, 'poscad_clinica.html')
+
+
 def login_user(requisicao):
-    return render(requisicao, 'login.html')
+    return render(requisicao, 'login_user.html')
 
 
 def logout_user(requisicao):
     return redirect('/')
 
 
-def login_cliente(requisicao):
-    return render(requisicao, 'login_cliente.html')
-
-
-def submit_cliente(requisicao):
+def submit_user(requisicao):
     if requisicao.POST:
         email = requisicao.POST['email']
         pass_user = requisicao.POST['pass_user']
         usuario = authenticate(username=email, password=pass_user)
         if usuario is not None:
             login(requisicao, usuario)
-            return render(requisicao, 'perfil_cliente.html')
+            if usuario.is_cliente:
+                return redirect('/perfil/cliente/')
+            elif usuario.is_medico:
+                return redirect('/perfil/medico/')
+            elif usuario.is_clinica:
+                return redirect('/perfil/clinica/')
+            else:
+                return redirect('/')
         else:
             messages.error(requisicao, 'Usuário ou senha invállido.')
-            return render(requisicao, 'login_cliente.html')
+            return render(requisicao, 'login_user.html')
+
+
+def perfil_cliente(requisicao):
+    usuario = requisicao.user
+    nome = ClienteProfile.objects.filter(email=usuario)
+    dados = {'nome': nome}
+    return render(requisicao, 'perfil_cliente.html', dados)
+
+
+def perfil_medico(requisicao):
+    return render(requisicao, 'perfil_medico.html')
+
+
+def perfil_clinica(requisicao):
+    return render(requisicao, 'perfil_clinica.html')
 
 
 @login_required(login_url='/login/')

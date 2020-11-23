@@ -27,16 +27,22 @@ urlpatterns = [
     path('agendamento/', views.agendamento),
     path('servicos/', views.servicos),
     # login
-    path('login/', views.login),
-    path('login/cliente/', views.login_cliente),
-    # path('login/medico/', views.login_medico),
-    # path('login/clinica', views.login_clinica),
+    path('login/', views.login_user),
+    path('login/submit', views.submit_user),
+    # logout
+    path('logout/', views.logout_user),
+    # perfis
+    path('perfil/cliente/', views.perfil_cliente),
+    path('perfil/medico/', views.perfil_medico),
+    path('perfil/clinica/', views.perfil_clinica),
     # cadastrar
-    path('cadastro/cliente/', views.cadastro_cliente, name='aline'),
+    path('cadastro/cliente/', views.cadastro_cliente),  # , name='aline'),
     path('cadastro/medico/', views.cadastro_medico),
     path('cadastro/clinica/', views.cadastro_clinica),
     # após cadastro
-    path('cadastro/cliente/ok', views.ok_cliente),
+    path('cadastro/cliente/ok/', views.ok_cliente),
+    path('cadastro/medico/ok/', views.ok_medico),
+    path('cadastro/clinica/ok/', views.ok_clinica),
     # agendar
     path('agendar/', views.agendar),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

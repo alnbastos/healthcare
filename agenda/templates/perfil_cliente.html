@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html>
 <head>
-    <!-- > REAPROVEITAMENTO DE CÓDIGO HTML <!-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Perfil</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
 </head>
 <body>
-    {% block content %} {% endblock %}
+    <!--Navbar-->
+    <nav class="menu">
+        <div class="logo">
+            <img src="{% static '/img/logo.png' %}" width="150" height="38"/>
+        </div>
+
+        <ul class="menu-items">
+			<li><a href="/">HOME</a></li>
+			<li><a href="/quemsomos/">QUEM SOMOS</a></li>
+			<li><a href="/servicos/">SERVIÇOS</a></li>
+			<li><a href="/agendamento/">AGENDAMENTO</a></li>
+			<li><a href="/login/">ENTRAR</a></li>
+         </ul>
+    </nav>
+    <!--Fim-Navbar-->
+
+    <!--Banner-->
+    <div>
+        <div class="banner">
+            <div class="banner-img">
+                <ul>
+                    <li><img src="{% static 'img/logo.png' %}" width="600" height="200" /></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!--Fim Imagem do banner-->
+
+    <div align="right">
+        <a href="/logout/">Logout</a>
+    </div>
+
+    <h1>Bem-vindo, {{ nome }}</h1>
+
 </body>
 </html>
