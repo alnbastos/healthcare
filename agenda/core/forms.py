@@ -45,7 +45,10 @@ class CadastroClinicaForm(forms.Form):
 class AgendaForm(forms.ModelForm):
     class Meta:
         model = Agenda
-        fields = ('data_agenda', 'clinica', 'especialidade', 'medico')
+        fields = ('data_agenda', 'especialidade', 'clinica', 'medico')
+        widgets = {
+            'data_agenda': forms.widgets.DateInput(attrs={'type': 'date'})
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
