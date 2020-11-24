@@ -1,4 +1,9 @@
 .idea/*
 **/__pycache__/**
 agenda/db.sqlite3
-agenda/core/migrations/0001_initial.py
+agenda/core/migrations/*
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
