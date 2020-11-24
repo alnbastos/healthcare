@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile, Agenda
 from core.forms import CadastroUsuarioForm, CadastroMedicoForm, CadastroClinicaForm, AgendaForm
@@ -151,11 +151,16 @@ def ok_clinica(requisicao):
     return render(requisicao, 'poscad_clinica.html')
 
 
+def ok_agendar(requisicao):
+    return render(requisicao, 'pos_agenda.html')
+
+
 def login_user(requisicao):
     return render(requisicao, 'login_user.html')
 
 
 def logout_user(requisicao):
+    logout(requisicao)
     return redirect('/')
 
 
@@ -190,7 +195,10 @@ def perfil_cliente(requisicao):
 
 @login_required(login_url='/login/')
 def perfil_medico(requisicao):
-    return render(requisicao, 'perfil_medico.html')
+    usuario = requisicao.user
+    nome = MedicoProfile.objects.get(user=usuario)
+    dados = {'nome': nome.nome}
+    return render(requisicao, 'perfil_medico.html', dados)
 
 
 @login_required(login_url='/login/')
@@ -206,7 +214,8 @@ def agendar(requisicao):
         if valido:
             form.instance.paciente = requisicao.user
             form.save()
-            return HttpResponse('Salvo')
+            return redirect('/agendar/ok/')
+            #return HttpResponse('Salvo')
     else:
         form = AgendaForm()
 
