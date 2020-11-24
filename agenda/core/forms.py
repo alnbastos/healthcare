@@ -1,5 +1,7 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import fields
+from django.contrib.admin import widgets
 from core.models import ClinicaProfile, Especialidade, MedicoProfile, Agenda
 
 
@@ -47,10 +49,29 @@ class AgendaForm(forms.ModelForm):
         model = Agenda
         fields = ('data_agenda', 'especialidade', 'clinica', 'medico')
         widgets = {
-            'data_agenda': forms.widgets.DateInput(attrs={'type': 'date'})
+            'data_agenda': forms.widgets.DateTimeInput(attrs={'type': 'date'})
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['clinica'].queryset = ClinicaProfile.objects.none()
         self.fields['medico'].queryset = MedicoProfile.objects.none()
+        if 'especialidade' in self.data:
+            try:
+                especialidade_id = int(self.data.get('especialidade'))
+                medicos = MedicoProfile.objects.filter(especialidade__id=especialidade_id)
+                self.fields['clinica'].queryset = ClinicaProfile.objects.filter(pk__in=medicos.values_list('clinica__clinicaprofile__cnpj'))
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['clinica'].queryset = self.instance.clinica
+        if 'clinica' in self.data:
+            try:
+                especialidade_id = int(self.data.get('especialidade'))
+                clinica_id = int(self.data.get('clinica'))
+                medicos = MedicoProfile.objects.filter(especialidade__id=especialidade_id, clinica__clinicaprofile__cnpj=clinica_id)
+                self.fields['medico'].queryset = medicos
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['medico'].queryset = self.instance.medico
