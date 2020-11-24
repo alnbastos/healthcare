@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -129,7 +130,7 @@ def cadastro_clinica(requisicao):
                                               telefone=telefone,
                                               email=email,
                                               user=user)
-                user.set_password(pass_user)  # criptografria da senha
+                user.set_password(pass_user)  # criptografia da senha
                 user.save()
                 user_profile.save()
                 return redirect('/cadastro/clinica/ok/')
@@ -182,7 +183,8 @@ def submit_user(requisicao):
 def perfil_cliente(requisicao):
     usuario = requisicao.user
     nome = ClienteProfile.objects.get(user=usuario)
-    dados = {'nome': nome.nome}
+    agendas = Agenda.objects.filter(paciente=usuario)
+    dados = {'nome': nome.nome, 'agendas': agendas}
     return render(requisicao, 'perfil_cliente.html', dados)
 
 
@@ -198,7 +200,16 @@ def perfil_clinica(requisicao):
 
 @login_required(login_url='/login/')
 def agendar(requisicao):
-    form = AgendaForm()
+    if requisicao.POST:
+        form = AgendaForm(requisicao.POST)
+        valido = form.is_valid()
+        if valido:
+            form.instance.paciente = requisicao.user
+            form.save()
+            return HttpResponse('Salvo')
+    else:
+        form = AgendaForm()
+
     return render(requisicao, 'agendar.html', context={'form': form})
 
 
