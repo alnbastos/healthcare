@@ -33,6 +33,17 @@
         <h1>Bem-vindo, {{ nome }}</h1>
         <br><br>
         <h4>Agendamentos:</h4>
+	        <ul>
+                {% for agenda in agendas %}
+                <li>
+                    {{ agenda.especialidade }} com Dr(a). {{ agenda.medico }} - {{ agenda.data_agenda }}
+                </li>
+                <li>
+                     Na clínica {{ agenda.clinica }}, {{ agenda.clinica.endereco }}, {{ agenda.clinica.cidade }} - CEP: {{ agenda.clinica.cep }}
+                </li><br>
+                {% endfor %}
+            </ul>
+        <br><br>
         <a href="/agendar">Agende sua consulta</a>
     </div>
 
