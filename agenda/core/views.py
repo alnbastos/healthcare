@@ -203,7 +203,10 @@ def perfil_medico(requisicao):
 
 @login_required(login_url='/login/')
 def perfil_clinica(requisicao):
-    return render(requisicao, 'perfil_clinica.html')
+    usuario = requisicao.user
+    nome = ClinicaProfile.objects.get(user=usuario)
+    dados = {'nome': nome.nome}
+    return render(requisicao, 'perfil_clinica.html', dados)
 
 
 @login_required(login_url='/login/')
