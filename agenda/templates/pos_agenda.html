@@ -7,53 +7,37 @@
 {% elif user.is_medico %}
     {% url 'perfil-medico' as the_url %}
 {% endif %}
-<html>
-<head>
+<html lang="en">
+	<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil Clinica</title>
+    <title>Agendamento - OK</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style1.css' %}">
 </head>
+
 <body>
-    <!--Navbar-->
     <nav class="menu">
         <div class="logo">
             <img src="{% static 'img/logo.png' %}" width="150" height="38"/>
         </div>
 
         <ul class="menu-items">
-			<li><a href="/">HOME</a></li>
-			<li><a href="/quemsomos/">QUEM SOMOS</a></li>
-			<li><a href="/servicos/">SERVIÇOS</a></li>
-			<li><a href="/agendamento/">AGENDAMENTO</a></li>
-			{% if the_url %}
+            <li><a href="/">HOME</a></li>
+            <li><a href="/quemsomos/">QUEM SOMOS</a></li>
+            <li><a href="/servicos/">SERVIÇOS</a></li>
+            <li><a href="/agendamento/">AGENDAMENTO</a></li>
+            {% if the_url %}
                 <li><a href="{{ the_url }}">PERFIL</a></li>
             {% else %}
                 <li><a href="/login/">ENTRAR</a></li>
             {% endif %}
-         </ul>
+        </ul>
     </nav>
-    <!--Fim-Navbar-->
+	<div class="card">
+		<h2>Agendamento efetuado com sucesso!</h2><br><br>
 
-    <!--Banner-->
-    <div>
-        <div class="banner">
-            <div class="banner-img">
-                <ul>
-                    <li><img src="{% static 'img/logo.png' %}" width="600" height="200" /></li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-    <!--Fim Imagem do banner-->
-
-    <div align="right">
-        <a href="/logout/">Logout</a>
-    </div>
-
-    <h1>Clínica {{ nome }}</h1>
-
+		<p>Para acessar seu perfil: <a href="/perfil/cliente/">clique aqui</a></p>
+	</div>
 </body>
 </html>

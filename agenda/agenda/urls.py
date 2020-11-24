@@ -32,9 +32,9 @@ urlpatterns = [
     # logout
     path('logout/', views.logout_user),
     # perfis
-    path('perfil/cliente/', views.perfil_cliente),
-    path('perfil/medico/', views.perfil_medico),
-    path('perfil/clinica/', views.perfil_clinica),
+    path('perfil/cliente/', views.perfil_cliente, name='perfil-cliente'),
+    path('perfil/medico/', views.perfil_medico, name='perfil-medico'),
+    path('perfil/clinica/', views.perfil_clinica, name='perfil-clinica'),
     # cadastrar
     path('cadastro/cliente/', views.cadastro_cliente),  # , name='aline'),
     path('cadastro/medico/', views.cadastro_medico),
@@ -45,6 +45,7 @@ urlpatterns = [
     path('cadastro/clinica/ok/', views.ok_clinica),
     # agendar
     path('agendar/', views.agendar),
+    path('agendar/ok/', views.ok_agendar),
     path('ajax/load-clinica/', views.load_clinica, name='ajax_load_clinica'),
     path('ajax/load-medico/', views.load_medico, name='ajax_load_medico'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

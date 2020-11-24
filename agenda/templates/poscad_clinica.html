@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 {% load static %}
+{% if user.is_cliente %}
+    {% url 'perfil-cliente' as the_url %}
+{% elif user.is_clinica %}
+    {% url 'perfil-clinica' as the_url %}
+{% elif user.is_medico %}
+    {% url 'perfil-medico' as the_url %}
+{% endif %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quem somos</title>
+    <title>Cadastro Clinica - OK</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style1.css' %}">
 </head>
@@ -16,11 +23,15 @@
 		</div>
 
 		<ul class="menu-items">
-				<li><a href="/">HOME</a></li>
-				<li><a href="/quemsomos/">QUEM SOMOS</a></li>
-				<li><a href="/servicos/">SERVIÇOS</a></li>
-				<li><a href="/agendamento/">AGENDAMENTO</a></li>
+			<li><a href="/">HOME</a></li>
+			<li><a href="/quemsomos/">QUEM SOMOS</a></li>
+			<li><a href="/servicos/">SERVIÇOS</a></li>
+			<li><a href="/agendamento/">AGENDAMENTO</a></li>
+			{% if the_url %}
+				<li><a href="{{ the_url }}">PERFIL</a></li>
+			{% else %}
 				<li><a href="/login/">ENTRAR</a></li>
+			{% endif %}
 		</ul>
 	</nav>
 

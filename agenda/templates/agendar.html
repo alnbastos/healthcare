@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
+{% if user.is_cliente %}
+    {% url 'perfil-cliente' as the_url %}
+{% elif user.is_clinica %}
+    {% url 'perfil-clinica' as the_url %}
+{% elif user.is_medico %}
+    {% url 'perfil-medico' as the_url %}
+{% endif %}
 <html lang="en">
-	<head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar</title>
@@ -10,27 +17,35 @@
 </head>
 
 <body>
-	<table>
-		<nav class="menu">
-			<div class="logo">
-				<img src="{% static 'img/logo.png' %}" width="150" height="38"/>
-			</div>
+	<nav class="menu">
+        <div class="logo">
+            <img src="{% static '/img/logo.png' %}" width="150" height="38"/>
+        </div>
 
-			<ul class="menu-items">
-				<li><a href="/">HOME</a></li>
-				<li><a href="/quemsomos/">QUEM SOMOS</a></li>
-				<li><a href="/servicos/">SERVIÇOS</a></li>
-				<li><a href="/agendamento/">AGENDAMENTO</a></li>
-				<li><a href="/login/">ENTRAR</a></li>
-			</ul>
-		</nav>
-	</table>
+        <ul class="menu-items">
+			<li><a href="/">HOME</a></li>
+			<li><a href="/quemsomos/">QUEM SOMOS</a></li>
+			<li><a href="/servicos/">SERVIÇOS</a></li>
+			<li><a href="/agendamento/">AGENDAMENTO</a></li>
+			{% if the_url %}
+                    <li><a href="{{ the_url }}">PERFIL</a></li>
+			{% else %}
+                    <li><a href="/login/">ENTRAR</a></li>
+			{% endif %}
+
+         </ul>
+    </nav>
 	<div class="card">
-		<form class="agendar" method="post" id="agendaForm" data-clinica-url="{% url 'ajax_load_clinica' %}" data-medico-url="{% url 'ajax_load_medico' %}" novalidate>
+		<h1>Agendamento de consultas</h1>
+    	<h7>Para agendar suas consultas, preencha os campos abaixo:</h7>
+		<br>
+
+		<form class="agendar" method="POST" id="agendaForm" data-clinica-url="{% url 'ajax_load_clinica' %}" data-medico-url="{% url 'ajax_load_medico' %}" novalidate>
 			{% csrf_token %}
 			<table>
 			  {{ form.as_table }}
 			</table>
+			<br>
 			<button type="submit">Agendar Consulta</button>
 		</form>
 

@@ -72,6 +72,7 @@ class Agenda(models.Model):
     clinica = models.ForeignKey(ClinicaProfile, on_delete=models.SET_NULL, null=True)
     especialidade = models.ForeignKey(Especialidade, on_delete=models.SET_NULL, null=True)
     medico = models.ForeignKey(MedicoProfile, on_delete=models.SET_NULL, null=True)
+    paciente = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # def __str__(self):
     #     return self.medico

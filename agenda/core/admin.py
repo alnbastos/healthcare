@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile, Especialidade, MedicoEspecialidade
+from core.models import User, ClienteProfile, MedicoProfile, ClinicaProfile, Especialidade, MedicoEspecialidade, Agenda
 # Register your models here.
 
 
@@ -19,9 +19,14 @@ class MedicoEspecialidadeAdmin(admin.ModelAdmin):
     list_display = ['medico', 'especialidade']
 
 
+class AgendaAdmin(admin.ModelAdmin):
+    list_display = ['data_agenda', 'clinica', 'especialidade', 'medico']
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(ClienteProfile, UserProfileAdmin)
 admin.site.register(MedicoProfile, UserProfileAdmin)
 admin.site.register(ClinicaProfile, UserProfileAdmin)
 admin.site.register(Especialidade, EspecialidadeAdmin)
 admin.site.register(MedicoEspecialidade, MedicoEspecialidadeAdmin)
+admin.site.register(Agenda, AgendaAdmin)
