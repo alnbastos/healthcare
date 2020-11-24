@@ -26,11 +26,12 @@
 		</nav>
 	</table>
 	<div class="card">
-		<form class="agendar" method="post" id="agendaForm" data-clinica-url="{% url 'ajax_load_clinica' %}" data-medico-url="{% url 'ajax_load_medico' %}" novalidate>
+		<form class="agendar" method="POST" id="agendaForm" data-clinica-url="{% url 'ajax_load_clinica' %}" data-medico-url="{% url 'ajax_load_medico' %}" novalidate>
 			{% csrf_token %}
 			<table>
 			  {{ form.as_table }}
 			</table>
+			<br>
 			<button type="submit">Agendar Consulta</button>
 		</form>
 
